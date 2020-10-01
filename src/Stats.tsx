@@ -36,7 +36,7 @@ export function Stats({nodes}: {nodes: Graph[]}) {
   if (nodes.length === 1) {
     return (
       <div className="Stats">
-        There are <span className="Stats_primary-metric">{nodes[0].count.toLocaleString()}</span> CSS files across marxists.org.
+        There are <span className="Stats_primary-metric">{nodes[0].count.toLocaleString()}</span> files analyzed across marxists.org.
       </div>
     );
   }
