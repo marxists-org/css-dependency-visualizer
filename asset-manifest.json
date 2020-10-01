@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/css-dependency-visualizer/static/css/main.f29c7569.chunk.css",
+    "main.js": "/css-dependency-visualizer/static/js/main.34df08ea.chunk.js",
+    "main.js.map": "/css-dependency-visualizer/static/js/main.34df08ea.chunk.js.map",
+    "runtime-main.js": "/css-dependency-visualizer/static/js/runtime-main.fdf04903.js",
+    "runtime-main.js.map": "/css-dependency-visualizer/static/js/runtime-main.fdf04903.js.map",
+    "static/css/2.6db69bf1.chunk.css": "/css-dependency-visualizer/static/css/2.6db69bf1.chunk.css",
+    "static/js/2.ebbbef9c.chunk.js": "/css-dependency-visualizer/static/js/2.ebbbef9c.chunk.js",
+    "static/js/2.ebbbef9c.chunk.js.map": "/css-dependency-visualizer/static/js/2.ebbbef9c.chunk.js.map",
+    "index.html": "/css-dependency-visualizer/index.html",
+    "precache-manifest.98a371f1dd10979e5ce6a96aa38965bd.js": "/css-dependency-visualizer/precache-manifest.98a371f1dd10979e5ce6a96aa38965bd.js",
+    "service-worker.js": "/css-dependency-visualizer/service-worker.js",
+    "static/css/2.6db69bf1.chunk.css.map": "/css-dependency-visualizer/static/css/2.6db69bf1.chunk.css.map",
+    "static/css/main.f29c7569.chunk.css.map": "/css-dependency-visualizer/static/css/main.f29c7569.chunk.css.map",
+    "static/js/2.ebbbef9c.chunk.js.LICENSE.txt": "/css-dependency-visualizer/static/js/2.ebbbef9c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fdf04903.js",
+    "static/css/2.6db69bf1.chunk.css",
+    "static/js/2.ebbbef9c.chunk.js",
+    "static/css/main.f29c7569.chunk.css",
+    "static/js/main.34df08ea.chunk.js"
+  ]
+}
