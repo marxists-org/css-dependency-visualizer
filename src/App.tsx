@@ -1,27 +1,21 @@
+import './App.css';
 import AppContext from './AppContext';
 import IndexRoute from './IndexRoute';
-import React, { useState, useEffect, useContext } from 'react';
-import { Switch, Route, } from 'react-router-dom';
-import './App.css';
+import React, {useContext, useEffect} from 'react';
+import {Route, Switch} from 'react-router-dom';
+import {fetch} from './DataStore';
 
 function App() {
-  const { setRootNode, store } = useContext(AppContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const {data, setData} = useContext(AppContext);
 
-  // this needs to be useEffect
   useEffect(() => {
-    if (!isLoading) return;
-    (async () => {
-      const graph = await store.get();
-      setIsLoading(false);
-      setRootNode(graph);
-    })();
-  });
+    if (data === null) fetch().then(setData);
+  }, [setData, data]);
 
   return (
     <div className="App">
       <Switch>
-        {isLoading ? "loading..." : <Route component={IndexRoute}/>}
+        <Route component={IndexRoute}/>
       </Switch>
     </div>
   );

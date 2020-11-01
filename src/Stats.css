@@ -1,13 +1,14 @@
-.Stats {
-  color: darkslategray;
-  flex: auto;
-}
-
-.Stats_breadcrumbs {
+.Breadcrumbs {
   font-size: 13px;
 }
 
+.Stats {
+  color: darkslategray;
+  font-size: 24px;
+}
+
 .Stats_primary-metric {
-  font-size: 48px;
+  font-size: 36px;
   color: black;
 }
+

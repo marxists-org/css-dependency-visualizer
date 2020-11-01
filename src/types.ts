@@ -1,15 +1,12 @@
-export type CliGraph = {
+export type Entry = {
+  dependents: string[],
+  dependentsCount: {
+    direct: number,
+    indirect: number,
+  },
+  id: string
+  imports: string[],
   name: string,
-  children: CliGraph[],
-}
-
-export namespace Models {
-  export type Graph = {
-    children: Graph[],
-    count: number,
-    id: string,
-    name: string,
-    percent: number,
-    type: "ROOT" | "CSS" | "HTML" | "ARCHIVE"
-  }
+  path: string,
+  type: "DIRECTORY"|"CSS"|"HTML"|"ROOT",
 }

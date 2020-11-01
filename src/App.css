@@ -6,7 +6,6 @@
 }
 
 .AppTopViz {
-  align-items: center;
   display: flex;
   grid-column: 2/3;
   grid-row: 2/3;
@@ -14,11 +13,11 @@
 }
 
 .AppTopStats {
-  align-items: center;
-  display: flex;
+  display: grid;
   grid-column: 4/5;
   grid-row: 2/3;
-  justify-content: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 3fr;
 }
 
 .AppList {
@@ -51,9 +50,16 @@
 
 .line-item_color {
   background-color: black;
+  flex: 0 0 16px;
+  height: 16px;
+  margin-right: 12px;
+  margin-left: 4px;
+}
+
+.Header_type,
+.line-item_type {
   flex: 0 0 20px;
-  height: 20px;
-  margin-right: 10px;
+  margin-right: 4px;
 }
 
 .Header_name,
