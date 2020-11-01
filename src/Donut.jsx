@@ -3,17 +3,37 @@ import {useHistory} from 'react-router-dom';
 import React, { useEffect, useRef, useContext } from "react";
 import * as d3 from "d3";
 
+// FIXME: duped from Collection.tsx
+const sortKeys = {
+  ROOT: 0,
+  DIRECTORY: 1,
+  HTML: 2,
+  CSS: 3,
+};
+
+function sortEntries(a, b) {
+  if (a.type === b.type) {
+    return (b.dependentsCount.indirect + b.dependentsCount.direct) - (a.dependentsCount.indirect + a.dependentsCount.direct);
+  } else {
+    return sortKeys[a.type] - sortKeys[b.type];
+  }
+}
+
 function Donut(props) {
   const svg = useRef(null);
-  const {hoverNode, setHoverNode} = useContext(AppContext);
+  const {hoverNode, setHoverNode, data} = useContext(AppContext);
   const history = useHistory();
 
   useEffect(() => {
     const onClick = (id) => history.push(id);
-    buildDonut(svg.current,
-      props.node.children.map(({name, count, id}) => ({name, id, value: count})), onClick,
-      setHoverNode);
-  }, [props.node, setHoverNode, history]);
+    const dependents = props.node.dependents
+      .map(id => data.get(id))
+      .filter(node => node != null);
+    buildDonut(svg.current, dependents
+      .sort(sortEntries)
+      .map(({name, dependentsCount, id}) =>
+        ({name, id, value: (dependentsCount.direct + dependentsCount.indirect)})), onClick, setHoverNode);
+  }, [props.node, setHoverNode, history, data]);
 
   useEffect(() => {
     mouseover(svg.current, hoverNode);

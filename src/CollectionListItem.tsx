@@ -1,4 +1,6 @@
 import * as React from "react";
+import { ReactComponent as FileIcon } from './file.svg';
+import { ReactComponent as FolderIcon } from './folder.svg';
 
 export type Props = {
   color?: string,
@@ -10,6 +12,7 @@ export type Props = {
   id: string,
   name: string,
   percent: number,
+  type: "DIRECTORY"|"CSS"|"HTML"|"ROOT",
   style?: any,
 };
 
@@ -34,6 +37,7 @@ function CollectionListItem(props: Props) {
         onMouseLeave={onMouseLeave}
         style={props.style}>
       <div className="line-item_color" style={style}></div>
+      {props.type === "DIRECTORY" ? <FolderIcon className="line-item_type" /> : <FileIcon className="line-item_type"/>}
       <div className="line-item_name">{props.name}</div>
       <div className="line-item_bar">
         <div className="bar">

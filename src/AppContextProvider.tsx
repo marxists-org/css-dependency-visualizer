@@ -1,9 +1,6 @@
 import * as React from 'react';
-import DataStore from './DataStore';
 import AppContext from './AppContext';
-import {Models} from './types';
-
-type Graph = Models.Graph;
+import {Entry} from './types';
 
 const {useState} = React;
 
@@ -11,21 +8,10 @@ type AppContextProviderProps = {
   children: React.ReactNode,
 };
 
-const store = new DataStore();
-
 function AppContextProvider(props: AppContextProviderProps) {
-  const [selectedNode, setSelectedNode] = useState<null|string>(null);
-  const [rootNode, setRootNode] = useState<null|Graph>(null);
+  const [data, setData] = useState<null|Map<string, Entry>>(null);
   const [hoverNode, setHoverNode] = useState<null|string>(null);
-  const value = {
-    rootNode,
-    setRootNode,
-    selectedNode,
-    setSelectedNode,
-    hoverNode,
-    setHoverNode,
-    store,
-  };
+  const value = { data, setData, hoverNode, setHoverNode };
   return (
     <AppContext.Provider value={value}>
       {props.children}

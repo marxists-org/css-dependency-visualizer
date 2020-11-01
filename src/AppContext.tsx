@@ -1,15 +1,11 @@
-import DataStore from './DataStore';
 import {createContext} from 'react';
-import {Models} from './types';
-
-type Graph = Models.Graph;
+import {Entry} from './types';
 
 type AppContextType = {
-  rootNode: null|Graph,
-  setRootNode: (node: null|Graph) => void,
+  data: null|Map<string, Entry>,
+  setData: (data: Map<string, Entry>) => void,
   hoverNode: null|string,
   setHoverNode: (node: null|string) => void,
-  store: DataStore,
 };
 
 const AppContext = createContext<AppContextType>({} as AppContextType);

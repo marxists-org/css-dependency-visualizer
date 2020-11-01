@@ -3,10 +3,7 @@ import Collection from './Collection';
 import Donut from './Donut';
 import React, { useContext} from 'react';
 import Stats from './Stats';
-import {Models} from './types';
 import {RouteComponentProps, useLocation} from 'react-router';
-
-type Graph = Models.Graph;
 
 type IndexParams = {
   id: string,
@@ -16,16 +13,15 @@ type IndexParams = {
 type Props = RouteComponentProps<IndexParams>;
 
 function IndexRoute(props: Props) {
-  const { rootNode, store } = useContext(AppContext);
+  const { data } = useContext(AppContext);
   const location = useLocation();
+  if (data == null) return null;
   const pathChunks = location.pathname.substr(1).split('/');
   const selectedNode = pathChunks[pathChunks.length - 1];
-  const node = selectedNode === ""
-    ? rootNode
-    : store.findById(selectedNode);
+  const node = data.get(selectedNode === "" ? "ALL_CSS" : selectedNode);
 
   return node == null
-    ? null
+    ? <>loading...</>
     : (<>
         <div className="AppTopViz">
           <div style={{width: "400px", height: "400px"}}>
