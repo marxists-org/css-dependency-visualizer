@@ -1,23 +1,8 @@
-import AppContext from './AppContext';
-import {useHistory} from 'react-router-dom';
-import React, { useEffect, useRef, useContext } from "react";
 import * as d3 from "d3";
-
-// FIXME: duped from Collection.tsx
-const sortKeys = {
-  ROOT: 0,
-  DIRECTORY: 1,
-  HTML: 2,
-  CSS: 3,
-};
-
-function sortEntries(a, b) {
-  if (a.type === b.type) {
-    return (b.dependentsCount.indirect + b.dependentsCount.direct) - (a.dependentsCount.indirect + a.dependentsCount.direct);
-  } else {
-    return sortKeys[a.type] - sortKeys[b.type];
-  }
-}
+import AppContext from './AppContext';
+import React, { useEffect, useRef, useContext } from "react";
+import {selectEntries} from "./utils";
+import {useHistory} from 'react-router-dom';
 
 function Donut(props) {
   const svg = useRef(null);
@@ -26,13 +11,12 @@ function Donut(props) {
 
   useEffect(() => {
     const onClick = (id) => history.push(id);
-    const dependents = props.node.dependents
-      .map(id => data.get(id))
-      .filter(node => node != null);
-    buildDonut(svg.current, dependents
-      .sort(sortEntries)
+    const entries = selectEntries(data, props.node.dependents);
+    const donutData = entries
+      .map(arr => arr[0])
       .map(({name, dependentsCount, id}) =>
-        ({name, id, value: (dependentsCount.direct + dependentsCount.indirect)})), onClick, setHoverNode);
+        ({name, id, value: (dependentsCount.direct + dependentsCount.indirect)}));
+    buildDonut(svg.current, donutData, onClick, setHoverNode);
   }, [props.node, setHoverNode, history, data]);
 
   useEffect(() => {
