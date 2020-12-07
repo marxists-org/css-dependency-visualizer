@@ -1,10 +1,11 @@
 import AppContext from './AppContext';
 import {Entry} from './types';
 import React, {useContext} from 'react';
-import {useLocation} from 'react-router';
+import {useLocation, useParams} from 'react-router';
+import {selectCssEntries} from './utils';
 import './Stats.css';
 
-export function Stats({nodes, hoverNode}: {nodes: Entry[], hoverNode: Entry|null}) {
+export function Stats({nodes, hoverNode, usePath}: {nodes: Entry[], hoverNode: Entry|null, usePath: boolean}) {
   if (nodes.length === 0) return null;
   if (nodes[0].type !== "ROOT") throw new Error("invariant");
   if (nodes.length === 1 && hoverNode == null) {
@@ -94,7 +95,7 @@ export function Stats({nodes, hoverNode}: {nodes: Entry[], hoverNode: Entry|null
 
   const childDescription = child.type === "DIRECTORY"
     ? `The ${child.name} directory`
-    : child.name;
+    : usePath ? child.path : child.name;
 
   return (
     <>
@@ -111,6 +112,7 @@ export function Stats({nodes, hoverNode}: {nodes: Entry[], hoverNode: Entry|null
 export default function(props: {className: string}) {
   const {data, hoverNode} = useContext(AppContext);
   const location = useLocation();
+  const {file} = useParams();
   if (data == null) return null;
 
   const pathChunks = (() => {
@@ -119,19 +121,25 @@ export default function(props: {className: string}) {
   })();
 
   const rootNode = data.get("ALL_CSS") as Entry;
-  const pathNodes = pathChunks
-    .map(id => data.get(id))
-    .filter(node => node != null) as Entry[];
+  const pathNodes = file == null
+    ? pathChunks
+        .map(id => data.get(id))
+      .filter(node => node != null) as Entry[]
+    : selectCssEntries(data, rootNode.dependents, true)
+        .filter(node => node!.path === "/"+file) as Entry[];
   const nodes = [rootNode, ...pathNodes];
+  console.log(nodes);
 
   const hoverOrUndefined = hoverNode === null
     ? null
-    : data.get(hoverNode);
+    : (file == null)
+      ? data.get(hoverNode)
+      : null;
   const hover = hoverOrUndefined == null ? null : hoverOrUndefined;
 
   return (
     <div className={props.className}>
-      <Stats nodes={nodes} hoverNode={hover}/>
+      <Stats nodes={nodes} hoverNode={hover} usePath={file != null}/>
     </div>
   )
 }

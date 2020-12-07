@@ -1,10 +1,10 @@
 import AppContext from './AppContext';
-import Collection from './ExplorerCollection';
-import Donut from './Donut';
+import Collection from './DependentsCollection';
 import Loading from './Loading';
 import React, { useContext} from 'react';
 import Stats from './Stats';
-import {RouteComponentProps, useLocation} from 'react-router';
+import {RouteComponentProps, useParams} from 'react-router';
+import {selectHtmlEntries} from "./utils";
 
 type IndexParams = {
   id: string,
@@ -29,13 +29,6 @@ function LoadingPage(props: {}) {
         <div className="Header_name">
           Name
         </div>
-        <div className="Header_bar"></div>
-        <div className="Header_count">
-          Count
-        </div>
-        <div className="Header_percentage">
-          Percent
-        </div>
       </div>
       <div className="AppList">
       </div>
@@ -43,32 +36,22 @@ function LoadingPage(props: {}) {
   );
 }
 
-function IndexRoute(props: Props) {
+function DependentsRoute(props: Props) {
   const { data } = useContext(AppContext);
-  const location = useLocation();
+  const {file} = useParams();
+
   if (data == null) return <LoadingPage />;
-  const pathChunks = location.pathname.substr(1).split('/');
-  const selectedNode = pathChunks[pathChunks.length - 1];
-  const node = data.get(selectedNode === "" ? "ALL_CSS" : selectedNode);
+  const allCss = data.get("ALL_CSS")!;
+  const node = file == null
+    ? allCss
+    : (() => selectHtmlEntries(data, allCss.dependents, true).find(node => node.path === "/"+file))();
   return node == null
     ? null
     : (<>
-        <div className="AppTopViz">
-          <div style={{width: "400px", height: "400px"}}>
-            <Donut node={node}/>
-          </div>
-        </div>
         <Stats className="AppTopStats"/>
         <div className="Header">
           <div className="Header_name">
             Name
-          </div>
-          <div className="Header_bar"></div>
-          <div className="Header_count">
-            Count
-          </div>
-          <div className="Header_percentage">
-            Percent
           </div>
         </div>
         <div className="AppList">
@@ -77,4 +60,4 @@ function IndexRoute(props: Props) {
       </>);
 }
 
-export default IndexRoute;
+export default DependentsRoute;

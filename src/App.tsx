@@ -1,5 +1,6 @@
 import './App.css';
 import AppContext from './AppContext';
+import DependentsRoute from './DependentsRoute';
 import IndexRoute from './IndexRoute';
 import React, {useContext, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
@@ -15,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <Switch>
+        <Route path={["/dependents/:file+", "/dependents"]} component={DependentsRoute}/>
         <Route component={IndexRoute}/>
       </Switch>
     </div>

@@ -16,7 +16,7 @@ function linkItemPropsFromEntry(node: Entry, parentCount: number): CollectionLis
   return {name: `/${name}` === path ? path : name, id, count, percent, type};
 }
 
-function Collection(props: {node: Entry}) {
+function Collection(props: {entries?: Entry[], node: Entry}) {
   const {data, hoverNode, setHoverNode} = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
